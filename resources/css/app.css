@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.vue';
+
+@theme {
+    --font-cairo: 'Cairo', ui-sans-serif, system-ui, sans-serif;
+    --color-forest: #0f4c3a;
+    --color-forest-light: #18634d;
+    --color-forest-dark: #093327;
+    --color-gold: #d97706;
+    --color-gold-light: #f59e0b;
+    --color-gold-soft: #fef3c7;
+    --color-cream: #faf9f5;
+    --color-ink: #0f172a;
+    --color-muted: #64748b;
+    --color-card: #ffffff;
+    --color-line: #e2e8f0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-cairo);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+input, select, textarea {
+    text-align: right;
+    transition: all 0.2s ease-in-out;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(15, 76, 58, 0.12);
+    border-color: var(--color-forest);
+}
+
+.bg-hero {
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 250, 252, 0.88) 100%),
+        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1800&q=80') center/cover;
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.card-hover-effect {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+}
+
+@layer components {
+    .ui-input,
+    .ui-select,
+    .ui-textarea {
+        @apply w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:bg-white;
+    }
+
+    .ui-textarea {
+        @apply min-h-[6rem] resize-y;
+    }
+
+    .ui-label {
+        @apply mb-1.5 block text-xs font-bold text-slate-600;
+    }
+
+    .ui-check {
+        @apply h-4 w-4 rounded border-slate-300 text-forest focus:ring-forest/20;
+    }
+
+    .ui-check-label {
+        @apply flex items-center gap-2 text-sm font-medium text-slate-700;
+    }
+
+    .ui-btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-2.5 text-xs font-extrabold transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .ui-btn-primary {
+        @apply bg-forest text-white shadow-xs hover:bg-forest-light;
+    }
+
+    .ui-btn-dark {
+        @apply bg-slate-900 text-white shadow-xs hover:bg-slate-800;
+    }
+
+    .ui-btn-gold {
+        @apply bg-gold text-white shadow-xs hover:bg-gold-light;
+    }
+
+    .ui-btn-secondary {
+        @apply border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50;
+    }
+
+    .ui-panel {
+        @apply rounded-3xl border border-slate-200/80 bg-white p-4 shadow-xs md:p-6;
+    }
+
+    .ui-panel-title {
+        @apply mb-4 text-sm font-black text-slate-900;
+    }
+
+    .ui-stat-card {
+        @apply rounded-3xl border border-slate-100 bg-white p-5 shadow-xs transition-all hover:shadow-md;
+    }
+
+    .ui-stat-label {
+        @apply text-xs font-bold text-slate-500;
+    }
+
+    .ui-stat-value {
+        @apply mt-1 text-2xl font-black tracking-tight text-slate-900;
+    }
+
+    .ui-table-wrap {
+        @apply hidden overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-xs md:block;
+    }
+
+    .ui-table {
+        @apply min-w-full text-right text-sm;
+    }
+
+    .ui-table-head {
+        @apply border-b border-slate-200/80 bg-slate-50 text-xs font-black text-slate-500;
+    }
+
+    .ui-table-body {
+        @apply divide-y divide-slate-100;
+    }
+
+    .ui-table-row {
+        @apply transition-colors hover:bg-slate-50/60;
+    }
+
+    .ui-mobile-card {
+        @apply space-y-3 rounded-3xl border border-slate-200/80 bg-white p-5 shadow-xs;
+    }
+
+    .ui-empty {
+        @apply rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center text-sm text-slate-500;
+    }
+
+    .ui-file-drop {
+        @apply rounded-2xl border-2 border-dashed border-slate-200 bg-cream/40 p-5;
+    }
+
+    .ui-section-title {
+        @apply mb-3 text-base font-extrabold text-slate-900;
+    }
+
+    .ui-list-item {
+        @apply border-t border-slate-100 py-2.5 text-sm text-slate-700 first:border-t-0;
+    }
+}
+
+
