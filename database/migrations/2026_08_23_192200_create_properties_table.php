@@ -17,8 +17,8 @@ return new class extends Migration
             $table->decimal('price', 14, 2)->nullable();
             $table->decimal('rent_price', 14, 2)->nullable();
             $table->string('rent_period', 20)->nullable();
-            $table->string('district')->nullable();
-            $table->string('city')->nullable();
+            $table->string('district', 100)->nullable();
+            $table->string('city', 100)->nullable();
             $table->string('address')->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
