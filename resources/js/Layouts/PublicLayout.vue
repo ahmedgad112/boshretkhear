@@ -7,13 +7,11 @@ const page = usePage();
 const open = ref(false);
 const settings = computed(() => page.props.settings || {});
 const user = computed(() => page.props.auth?.user);
-const name = computed(() => settings.value.business_name || 'بشرى خير');
+const name = computed(() => settings.value.business_name || 'بشرة خير');
 
 const links = [
     { href: route('home'), label: 'الرئيسية' },
-    { href: route('properties.index'), label: 'كل العقارات' },
-    { href: route('properties.sale'), label: 'للبيع' },
-    { href: route('properties.rent'), label: 'للإيجار' },
+    { href: route('properties.index'), label: 'الشقق' },
     { href: route('about'), label: 'من نحن' },
     { href: route('contact'), label: 'تواصل معنا' },
 ];
@@ -56,7 +54,7 @@ const isActive = (href) => page.url === pathOf(href) || (href !== route('home') 
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>منصة بشرى خير للعقارات والاستثمار - متاحون لخدمتكم</span>
+                    <span>منصة بشرة خير لعرض الشقق - متاحون لخدمتكم</span>
                 </div>
             </div>
         </div>
@@ -73,7 +71,7 @@ const isActive = (href) => page.url === pathOf(href) || (href !== route('home') 
                     </div>
                     <div class="flex flex-col">
                         <span class="leading-none text-forest font-extrabold tracking-tight">{{ name }}</span>
-                        <span class="text-[10px] font-semibold text-amber-600 tracking-wider">العقارات والاستثمار</span>
+                        <span class="text-[10px] font-semibold text-amber-600 tracking-wider">عرض الشقق</span>
                     </div>
                 </Link>
 
@@ -173,7 +171,7 @@ const isActive = (href) => page.url === pathOf(href) || (href !== route('home') 
                         <span>{{ name }}</span>
                     </div>
                     <p class="text-sm leading-7 text-slate-500 max-w-md">
-                        منصة عربية متكاملة لبيع وتأجير وإدارة العقارات بكل احترافية وشفافية. نسهل عليك العثور على بيت الأحلام وإدارة استثماراتك العقارية بثقة.
+                        منصة عربية لعرض الشقق بتفاصيلها وصورها. تصفّح الوحدات المتاحة وتواصل معنا مباشرة للاستفسار.
                     </p>
                 </div>
 
@@ -182,9 +180,7 @@ const isActive = (href) => page.url === pathOf(href) || (href !== route('home') 
                     <h4 class="text-base font-extrabold text-slate-900">روابط سريعة</h4>
                     <ul class="space-y-2 text-sm text-slate-600">
                         <li><Link :href="route('home')" class="hover:text-forest transition-colors">الرئيسية</Link></li>
-                        <li><Link :href="route('properties.index')" class="hover:text-forest transition-colors">استعراض العقارات</Link></li>
-                        <li><Link :href="route('properties.sale')" class="hover:text-forest transition-colors">عقارات للبيع</Link></li>
-                        <li><Link :href="route('properties.rent')" class="hover:text-forest transition-colors">عقارات للإيجار</Link></li>
+                        <li><Link :href="route('properties.index')" class="hover:text-forest transition-colors">جميع الشقق</Link></li>
                         <li><Link :href="route('about')" class="hover:text-forest transition-colors">عن الشركة</Link></li>
                         <li><Link :href="route('contact')" class="hover:text-forest transition-colors">تواصل معنا</Link></li>
                     </ul>

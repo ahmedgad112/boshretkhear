@@ -18,34 +18,16 @@ const notifications = computed(() => page.props.notifications || { unread: 0, it
 
 const groups = computed(() => [
     {
-        title: 'الرئيسية والتحليل',
+        title: 'الرئيسية',
         items: [
             { href: route('admin.dashboard'), label: 'الرئيسية', icon: 'dashboard', show: can('dashboard.view') },
         ],
     },
     {
-        title: 'إدارة العقارات',
+        title: 'إدارة الشقق',
         items: [
-            { href: route('admin.properties.index'), label: 'العقارات', icon: 'building', show: can('properties.view') },
+            { href: route('admin.properties.index'), label: 'الشقق', icon: 'building', show: can('properties.view') },
             { href: route('admin.property-types.index'), label: 'أنواع العقارات', icon: 'type', show: can('property_types.view') },
-        ],
-    },
-    {
-        title: 'العمليات والعملاء',
-        items: [
-            { href: route('admin.customers.index'), label: 'العملاء', icon: 'users', show: can('customers.view') },
-            { href: route('admin.bookings.index'), label: 'الحجوزات', icon: 'calendar', show: can('bookings.view') },
-            { href: route('admin.rentals.index'), label: 'الإيجارات', icon: 'key', show: can('bookings.view') },
-            { href: route('admin.sales.index'), label: 'المبيعات', icon: 'tag', show: can('sales.view') },
-        ],
-    },
-    {
-        title: 'المالية والتقارير',
-        items: [
-            { href: route('admin.payments.index'), label: 'المدفوعات', icon: 'credit-card', show: can('payments.view') },
-            { href: route('admin.expenses.index'), label: 'المصروفات', icon: 'receipt', show: can('expenses.view') },
-            { href: route('admin.accounts.index'), label: 'الحسابات المالية', icon: 'wallet', show: can('accounts.view') },
-            { href: route('admin.reports.index'), label: 'التقارير الإحصائية', icon: 'chart', show: can('reports.view') },
         ],
     },
     {
@@ -138,7 +120,7 @@ const logout = () => router.post(route('logout'));
                         </svg>
                     </div>
                     <div>
-                        <h2 class="font-extrabold text-slate-900 text-base leading-tight">{{ settings.business_name || 'بشرى خير' }}</h2>
+                        <h2 class="font-extrabold text-slate-900 text-base leading-tight">{{ settings.business_name || 'بشرة خير' }}</h2>
                         <p class="text-[11px] font-medium text-slate-400">لوحة الإدارة العقارية</p>
                     </div>
                 </Link>
@@ -249,7 +231,7 @@ const logout = () => router.post(route('logout'));
                         <input
                             v-model="search"
                             type="search"
-                            placeholder="بحث سريع في العقارات والعملاء والحجوزات والمبيعات..."
+                            placeholder="بحث سريع في الشقق..."
                             class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 pr-10 text-sm focus:bg-white"
                             @input="doSearch"
                         />
@@ -262,7 +244,7 @@ const logout = () => router.post(route('logout'));
                     <div v-if="results" class="absolute right-0 mt-2 w-full max-h-96 overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-slate-900/10 z-50">
                         <div v-for="(group, key) in results" :key="key" class="mb-4 last:mb-0">
                             <p class="mb-2 text-xs font-black text-forest border-b border-slate-100 pb-1">
-                                {{ { properties: 'العقارات', customers: 'العملاء', bookings: 'الحجوزات', sales: 'المبيعات', payments: 'المدفوعات', expenses: 'المصروفات' }[key] || key }}
+                                {{ { properties: 'الشقق' }[key] || key }}
                             </p>
                             <div class="space-y-1">
                                 <Link

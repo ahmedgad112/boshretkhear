@@ -140,4 +140,9 @@ class Property extends Model
     {
         return $query->whereIn('purpose', ['rent', 'both']);
     }
+
+    public function scopeApartments($query)
+    {
+        return $query->whereHas('type', fn ($q) => $q->where('slug', 'apartment'));
+    }
 }

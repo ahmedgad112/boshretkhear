@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import { computed, reactive, ref } from 'vue';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
 import PropertyCard from '../../Components/PropertyCard.vue';
-import StatusBadge from '../../Components/StatusBadge.vue';
+import PropertyDisplayBadge from '../../Components/PropertyDisplayBadge.vue';
 
 defineOptions({ layout: PublicLayout });
 
@@ -20,13 +20,12 @@ const currentMedia = computed(() => props.property.images?.[current.value]);
 const form = reactive({
     name: '',
     phone: '',
-    type: props.property.purpose === 'sale' ? 'viewing' : 'booking',
+    type: 'contact',
     message: '',
 });
 
 const typeLabels = {
-    booking: 'طلب حجز الموعد',
-    viewing: 'طلب معاينة ميدانية',
+    viewing: 'طلب معاينة',
     contact: 'استفسار عام',
 };
 
@@ -76,10 +75,10 @@ const submit = () => {
 
                     <!-- Top Badges -->
                     <div class="absolute top-4 right-4 flex items-center gap-2">
-                        <span class="rounded-full bg-amber-500 px-3.5 py-1 text-xs font-black text-slate-950 shadow-sm">
-                            {{ property.purpose_label }}
-                        </span>
-                        <StatusBadge :value="property.status" :label="property.status_label" />
+                        <PropertyDisplayBadge
+                            :property="property"
+                            purpose-class="rounded-full bg-amber-500 px-3.5 py-1 text-xs font-black text-slate-950 shadow-sm"
+                        />
                     </div>
                 </div>
 
@@ -126,15 +125,6 @@ const submit = () => {
                         </div>
                         <h1 class="text-2xl font-black text-slate-900 md:text-3xl">{{ property.name }}</h1>
                         <p v-if="property.address" class="text-xs text-slate-400">{{ property.address }}</p>
-                    </div>
-
-                    <div class="text-left bg-emerald-50 rounded-2xl p-4 border border-emerald-100">
-                        <span class="block text-xs font-medium text-emerald-800">
-                            {{ property.purpose === 'sale' ? 'سعر البيع المطلق' : (property.rent_period_label || 'قيمة الإيجار') }}
-                        </span>
-                        <p class="text-2xl font-black text-forest mt-0.5">
-                            {{ property.purpose === 'sale' ? property.price : property.rent_price }}
-                        </p>
                     </div>
                 </div>
 
@@ -189,7 +179,7 @@ const submit = () => {
         <aside class="space-y-6">
             <div class="sticky top-24 rounded-3xl bg-white p-6 shadow-lg border border-slate-100 space-y-6">
                 <div class="border-b border-slate-100 pb-4">
-                    <h3 class="text-lg font-black text-slate-900">مهتم بهذا العقار؟</h3>
+                    <h3 class="text-lg font-black text-slate-900">مهتم بهذه الشقة؟</h3>
                     <p class="text-xs text-slate-500 mt-1">أرسل استفسارك عبر واتساب وسنتواصل معك فوراً</p>
                 </div>
 
@@ -228,9 +218,8 @@ const submit = () => {
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">نوع الطلب</label>
                         <select v-model="form.type" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm focus:bg-white">
-                            <option v-if="property.purpose !== 'sale'" value="booking">طلب حجز الموعد</option>
-                            <option v-if="property.purpose !== 'rent'" value="viewing">طلب معاينة ميدانية</option>
                             <option value="contact">استفسار عام</option>
+                            <option value="viewing">طلب معاينة</option>
                         </select>
                     </div>
 
@@ -251,7 +240,7 @@ const submit = () => {
     <section v-if="similar && similar.length" class="mt-16 border-t border-slate-200 pt-12">
         <div class="mb-8">
             <span class="text-xs font-bold text-amber-600 tracking-wider">اقتراحات مشابهة</span>
-            <h2 class="text-2xl font-black text-slate-900 md:text-3xl">عقارات ذات صلة</h2>
+            <h2 class="text-2xl font-black text-slate-900 md:text-3xl">شقق مشابهة</h2>
         </div>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <PropertyCard v-for="item in similar" :key="item.id" :property="item" />

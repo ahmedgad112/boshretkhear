@@ -17,7 +17,11 @@ return new class extends Migration
             $table->date('end_date');
             $table->unsignedInteger('nights');
             $table->decimal('nightly_rate', 14, 2);
+            $table->string('discount_type', 20)->default('amount');
+            $table->decimal('discount_value', 14, 2)->default(0);
             $table->decimal('discount', 14, 2)->default(0);
+            $table->string('extra_type', 20)->default('amount');
+            $table->decimal('extra_value', 14, 2)->default(0);
             $table->decimal('extra_amount', 14, 2)->default(0);
             $table->decimal('rent_amount', 14, 2);
             $table->decimal('total', 14, 2);

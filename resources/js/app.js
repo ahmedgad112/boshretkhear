@@ -4,7 +4,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from 'ziggy-js';
 
-const appName = 'بشرى خير';
+const appName = 'بشرة خير';
 
 createInertiaApp({
     title: (title) => (title ? `${title} | ${appName}` : appName),

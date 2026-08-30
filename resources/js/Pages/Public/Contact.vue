@@ -167,7 +167,7 @@ const submit = () => {
                         </span>
                         <span>
                             <span class="block text-xs text-white/70">فيسبوك</span>
-                            <span class="text-sm font-bold">صفحة بشرى خير</span>
+                            <span class="text-sm font-bold">صفحة بشرة خير</span>
                         </span>
                     </a>
                 </div>

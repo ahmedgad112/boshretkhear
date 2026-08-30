@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\InquiryRequest;
 use App\Models\Inquiry;
 use App\Models\Property;
-use App\Models\PropertyType;
 use App\Models\Setting;
 use App\Services\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
@@ -18,39 +17,22 @@ class HomeController extends Controller
 {
     public function index(): Response
     {
-        $base = Property::query()->published()->with(['type', 'images', 'features']);
+        $base = Property::query()->published()->apartments()->with(['type', 'images', 'features']);
 
         return Inertia::render('Public/Home', [
             'featured' => (clone $base)->featured()->latest()->limit(6)->get()->map(fn ($p) => $this->card($p)),
-            'forSale' => (clone $base)->forSale()->where('status', 'available')->latest()->limit(6)->get()->map(fn ($p) => $this->card($p)),
-            'forRent' => (clone $base)->forRent()->whereIn('status', ['available', 'reserved'])->latest()->limit(6)->get()->map(fn ($p) => $this->card($p)),
-            'types' => PropertyType::query()->where('is_active', true)->orderBy('name')->get(['id', 'name']),
-            'cities' => Property::query()->published()->whereNotNull('city')->distinct()->orderBy('city')->pluck('city'),
+            'apartments' => (clone $base)->latest()->limit(12)->get()->map(fn ($p) => $this->card($p)),
+            'cities' => Property::query()->published()->apartments()->whereNotNull('city')->distinct()->orderBy('city')->pluck('city'),
         ]);
     }
 
     public function properties(Request $request): Response
     {
-        $query = Property::query()->published()->with(['type', 'images', 'features']);
-
-        if ($request->filled('purpose')) {
-            if ($request->purpose === 'sale') {
-                $query->forSale();
-            } elseif ($request->purpose === 'rent') {
-                $query->forRent();
-            }
-        }
+        $query = Property::query()->published()->apartments()->with(['type', 'images', 'features']);
 
         $query
-            ->when($request->property_type_id, fn ($q, $id) => $q->where('property_type_id', $id))
             ->when($request->city, fn ($q, $city) => $q->where('city', $city))
             ->when($request->district, fn ($q, $district) => $q->where('district', 'like', '%'.$district.'%'))
-            ->when($request->price_from, fn ($q, $value) => $q->where(function ($inner) use ($value) {
-                $inner->where('price', '>=', $value)->orWhere('rent_price', '>=', $value);
-            }))
-            ->when($request->price_to, fn ($q, $value) => $q->where(function ($inner) use ($value) {
-                $inner->where('price', '<=', $value)->orWhere('rent_price', '<=', $value);
-            }))
             ->when($request->area_from, fn ($q, $value) => $q->where('area', '>=', $value))
             ->when($request->area_to, fn ($q, $value) => $q->where('area', '<=', $value))
             ->when($request->rooms, fn ($q, $value) => $q->where('rooms', '>=', $value))
@@ -68,22 +50,22 @@ class HomeController extends Controller
         return Inertia::render('Public/Properties', [
             'properties' => $paginated->through(fn ($p) => $this->card($p)),
             'filters' => $request->only([
-                'q', 'purpose', 'property_type_id', 'city', 'district',
-                'price_from', 'price_to', 'area_from', 'area_to', 'rooms', 'bathrooms', 'status',
+                'q', 'city', 'district', 'area_from', 'area_to', 'rooms', 'bathrooms', 'status',
             ]),
-            'types' => PropertyType::query()->where('is_active', true)->orderBy('name')->get(['id', 'name']),
-            'cities' => Property::query()->published()->whereNotNull('city')->distinct()->orderBy('city')->pluck('city'),
+            'cities' => Property::query()->published()->apartments()->whereNotNull('city')->distinct()->orderBy('city')->pluck('city'),
         ]);
     }
 
     public function show(Property $property): Response
     {
         abort_unless($property->is_published, 404);
+        abort_unless($property->type?->slug === 'apartment', 404);
 
         $property->load(['type', 'images', 'features']);
 
         $similar = Property::query()
             ->published()
+            ->apartments()
             ->where('id', '!=', $property->id)
             ->where(function ($q) use ($property) {
                 $q->where('property_type_id', $property->property_type_id)
@@ -151,9 +133,6 @@ class HomeController extends Controller
             'area' => $property->area,
             'rooms' => $property->rooms,
             'bathrooms' => $property->bathrooms,
-            'price' => $property->price,
-            'rent_price' => $property->rent_price,
-            'rent_period_label' => $property->rent_period_label,
             'image' => $primary?->url,
             'image_type' => $primary?->media_type ?? 'image',
         ];

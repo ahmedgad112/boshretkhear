@@ -12,8 +12,7 @@ defineOptions({ layout: PublicLayout });
         <span class="text-xs font-bold tracking-wider text-amber-600">تعرف علينا</span>
         <h1 class="mb-4 text-3xl font-black text-slate-900 md:text-4xl">من نحن</h1>
         <p class="mb-8 max-w-3xl text-base leading-8 text-slate-600">
-            بشرى خير منصة عقارية عربية متكاملة تجمع بين عرض العقارات للعملاء وإدارتها داخليًا باحتراف.
-            نساعد أصحاب النشاط على تنظيم الحجوزات والمبيعات والعملاء والمدفوعات والمصروفات من لوحة واحدة واضحة.
+            بشرة خير منصة عربية لعرض الشقق بتفاصيلها وصورها. نساعدك على تصفّح الوحدات المتاحة والتواصل معنا للاستفسار.
         </p>
         <div class="grid gap-6 md:grid-cols-3">
             <div class="rounded-3xl border border-slate-100 bg-cream/60 p-6 transition-all hover:shadow-md">
@@ -32,7 +31,7 @@ defineOptions({ layout: PublicLayout });
                     </svg>
                 </div>
                 <h3 class="mb-2 text-lg font-extrabold text-slate-900">ثقة</h3>
-                <p class="text-sm leading-7 text-slate-500">نظام مالي يسجل كل عملية ويربطها بالعقار والعميل.</p>
+                <p class="text-sm leading-7 text-slate-500">معلومات دقيقة وواضحة عن كل شقة لمساعدتك في اتخاذ القرار.</p>
             </div>
             <div class="rounded-3xl border border-slate-100 bg-cream/60 p-6 transition-all hover:shadow-md">
                 <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700">

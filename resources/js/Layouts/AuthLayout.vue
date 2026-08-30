@@ -11,7 +11,7 @@ import { Link } from '@inertiajs/vue3';
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0h4m-4 0V11m0 0h4m-4 0H7" />
                     </svg>
                 </div>
-                <span class="text-2xl font-black text-forest">بشرى خير</span>
+                <span class="text-2xl font-black text-forest">بشرة خير</span>
                 <span class="text-xs font-semibold text-amber-600">لوحة الإدارة العقارية</span>
             </Link>
             <slot />

@@ -224,7 +224,7 @@
     <div class="sheet">
         <div class="header">
             <div class="brand">
-                <h1>{{ $settings['business_name'] ?? 'بشرى خير' }}</h1>
+                <h1>{{ $settings['business_name'] ?? 'بشرة خير' }}</h1>
                 <p>{{ $settings['address'] ?? '' }}</p>
                 <p>
                     @if(!empty($settings['phone'])) هاتف: {{ $settings['phone'] }} @endif
@@ -253,7 +253,7 @@
             <table>
                 <tr>
                     <th>اسم الشركة / النشاط</th>
-                    <td>{{ $settings['business_name'] ?? 'بشرى خير' }}</td>
+                    <td>{{ $settings['business_name'] ?? 'بشرة خير' }}</td>
                 </tr>
                 <tr>
                     <th>العنوان</th>
@@ -453,7 +453,7 @@
         </div>
 
         <div class="footer">
-            تم إنشاء هذا العقد تلقائيًا من نظام {{ $settings['business_name'] ?? 'بشرى خير' }} — {{ $printedAt }}
+            تم إنشاء هذا العقد تلقائيًا من نظام {{ $settings['business_name'] ?? 'بشرة خير' }} — {{ $printedAt }}
         </div>
     </div>
 </body>

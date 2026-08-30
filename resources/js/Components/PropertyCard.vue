@@ -1,10 +1,13 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-import StatusBadge from './StatusBadge.vue';
+import PropertyDisplayBadge from './PropertyDisplayBadge.vue';
+import { useShare } from '../composables/useShare';
 
 defineProps({
     property: Object,
 });
+
+const { copied, shareProperty } = useShare();
 </script>
 
 <template>
@@ -35,10 +38,7 @@ defineProps({
 
             <!-- Top Badges -->
             <div class="absolute right-3.5 top-3.5 flex flex-wrap gap-2">
-                <span class="inline-flex items-center gap-1 rounded-full bg-amber-500/95 px-3 py-1 text-xs font-bold text-slate-950 shadow-sm backdrop-blur-md">
-                    {{ property.purpose_label }}
-                </span>
-                <StatusBadge :value="property.status" :label="property.status_label" />
+                <PropertyDisplayBadge :property="property" />
             </div>
 
             <!-- Type badge on left -->
@@ -96,19 +96,25 @@ defineProps({
                 </div>
             </div>
 
-            <!-- Footer Price & CTA -->
-            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
-                <div>
-                    <span class="text-[11px] font-medium text-slate-400">
-                        {{ property.purpose === 'sale' ? 'سعر البيع' : (property.rent_period_label || 'الإيجار') }}
-                    </span>
-                    <p class="text-lg font-black text-forest">
-                        {{ property.purpose === 'sale' ? property.price : (property.rent_price || property.price) }}
-                    </p>
-                </div>
+            <!-- Footer CTA -->
+            <div class="flex gap-2 pt-1 border-t border-slate-100">
+                <button
+                    type="button"
+                    class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-700 shadow-xs transition-all hover:border-forest hover:bg-forest/5 hover:text-forest active:scale-95"
+                    :title="copied ? 'تم نسخ الرابط' : 'مشاركة'"
+                    @click="shareProperty(property)"
+                >
+                    <svg v-if="!copied" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <svg v-else class="h-4 w-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{{ copied ? 'تم النسخ' : 'مشاركة' }}</span>
+                </button>
                 <Link
                     :href="route('properties.show', property.id)"
-                    class="inline-flex items-center gap-1.5 rounded-2xl bg-forest px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-forest-light hover:shadow-md active:scale-95"
+                    class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-2xl bg-forest px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-forest-light hover:shadow-md active:scale-95"
                 >
                     <span>التفاصيل</span>
                     <svg class="h-4 w-4 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">

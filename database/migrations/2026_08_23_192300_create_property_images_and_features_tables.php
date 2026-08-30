@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('property_id')->constrained()->cascadeOnDelete();
             $table->string('path');
             $table->string('original_name')->nullable();
+            $table->string('media_type', 10)->default('image');
             $table->boolean('is_primary')->default(false);
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();

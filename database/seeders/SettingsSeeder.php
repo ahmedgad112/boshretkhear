@@ -10,7 +10,7 @@ class SettingsSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            'business_name' => 'بشرى خير',
+            'business_name' => 'بشرة خير',
             'phone' => '01012345678',
             'email' => 'info@boshret.test',
             'address' => 'شارع التحرير، القاهرة',
@@ -19,7 +19,7 @@ class SettingsSeeder extends Seeder
             'default_rent_period' => 'nightly',
             'notify_due_amounts' => '1',
             'notify_bookings' => '1',
-            'about' => 'منصة بشرى خير لإدارة وعرض العقارات بكل احترافية ووضوح.',
+            'about' => 'منصة بشرة خير لإدارة وعرض العقارات بكل احترافية ووضوح.',
         ];
 
         foreach ($settings as $key => $value) {

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('national_id', 30)->nullable();
+            $table->string('id_card_path')->nullable();
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
