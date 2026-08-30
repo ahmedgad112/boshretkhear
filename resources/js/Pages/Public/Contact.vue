@@ -1,7 +1,8 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
+import SeoHead from '../../Components/SeoHead.vue';
+import { DEFAULT_KEYWORDS, uniqueKeywords } from '../../composables/useSeo';
 
 defineOptions({ layout: PublicLayout });
 
@@ -43,7 +44,11 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="تواصل معنا" />
+    <SeoHead
+        title="تواصل معنا"
+        description="تواصل مع بشرة خير للاستفسار عن الشقق للبيع والإيجار. أرسل رسالتك عبر واتساب أو اتصل بنا — فريقنا جاهز لمساعدتك."
+        :keywords="uniqueKeywords(DEFAULT_KEYWORDS, ['تواصل', 'استفسار شقة', 'طلب معاينة', 'حجز شقة', 'شراء شقة'])"
+    />
 
     <section class="grid gap-8 lg:grid-cols-5">
         <!-- Form -->

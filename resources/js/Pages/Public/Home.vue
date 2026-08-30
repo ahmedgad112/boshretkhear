@@ -1,7 +1,15 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
 import PropertyCard from '../../Components/PropertyCard.vue';
+import SeoHead from '../../Components/SeoHead.vue';
+import {
+    DEFAULT_KEYWORDS,
+    organizationJsonLd,
+    uniqueKeywords,
+    useSeo,
+    websiteJsonLd,
+} from '../../composables/useSeo';
 
 defineOptions({ layout: PublicLayout });
 
@@ -17,10 +25,16 @@ const form = useForm({
 });
 
 const search = () => form.get(route('properties.index'));
+const { appUrl } = useSeo();
 </script>
 
 <template>
-    <Head title="الرئيسية - بشرة خير" />
+    <SeoHead
+        title="شقق للبيع والإيجار"
+        description="بشرة خير — منصة عربية لتصفّح الشقق للبيع والإيجار. اكتشف وحدات سكنية بصور وتفاصيل كاملة وتواصل معنا للاستفسار والمعاينة."
+        :keywords="uniqueKeywords(DEFAULT_KEYWORDS, ['شقق للبيع', 'شقق للإيجار', 'عقارات سكنية', 'شقة مفروشة'])"
+        :json-ld="[organizationJsonLd(appUrl), websiteJsonLd(appUrl)]"
+    />
 
     <!-- Hero Section -->
     <section class="relative mb-16 overflow-hidden rounded-[2.5rem] border border-slate-200/80 bg-gradient-to-br from-emerald-50/80 via-white to-amber-50/60 px-6 py-16 text-slate-900 shadow-lg md:px-12 md:py-20">

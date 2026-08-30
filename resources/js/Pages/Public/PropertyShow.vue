@@ -1,9 +1,16 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
 import { computed, reactive, ref } from 'vue';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
 import PropertyCard from '../../Components/PropertyCard.vue';
 import PropertyDisplayBadge from '../../Components/PropertyDisplayBadge.vue';
+import SeoHead from '../../Components/SeoHead.vue';
+import {
+    buildPropertyDescription,
+    buildPropertyKeywords,
+    buildPropertyTitle,
+    propertyJsonLd,
+    useSeo,
+} from '../../composables/useSeo';
 
 defineOptions({ layout: PublicLayout });
 
@@ -46,10 +53,24 @@ const submit = () => {
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
     window.open(url, '_blank', 'noopener,noreferrer');
 };
+
+const { appUrl } = useSeo();
+const seoTitle = computed(() => buildPropertyTitle(props.property));
+const seoDescription = computed(() => buildPropertyDescription(props.property));
+const seoKeywords = computed(() => buildPropertyKeywords(props.property));
+const seoImage = computed(() => props.property.images?.find((item) => item.media_type !== 'video')?.url ?? '');
+const seoJsonLd = computed(() => propertyJsonLd(props.property, appUrl.value));
 </script>
 
 <template>
-    <Head :title="property.name" />
+    <SeoHead
+        :title="seoTitle"
+        :description="seoDescription"
+        :keywords="seoKeywords"
+        :image="seoImage"
+        type="product"
+        :json-ld="seoJsonLd"
+    />
 
     <div class="grid gap-8 lg:grid-cols-3">
         <!-- Main Column -->

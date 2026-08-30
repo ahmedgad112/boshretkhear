@@ -38,6 +38,8 @@ class HomeController extends Controller
             ->when($request->rooms, fn ($q, $value) => $q->where('rooms', '>=', $value))
             ->when($request->bathrooms, fn ($q, $value) => $q->where('bathrooms', '>=', $value))
             ->when($request->status, fn ($q, $status) => $q->where('status', $status))
+            ->when($request->purpose === 'sale', fn ($q) => $q->forSale())
+            ->when($request->purpose === 'rent', fn ($q) => $q->forRent())
             ->when($request->q, fn ($q, $term) => $q->where(function ($inner) use ($term) {
                 $inner->where('name', 'like', '%'.$term.'%')
                     ->orWhere('city', 'like', '%'.$term.'%')
@@ -50,7 +52,7 @@ class HomeController extends Controller
         return Inertia::render('Public/Properties', [
             'properties' => $paginated->through(fn ($p) => $this->card($p)),
             'filters' => $request->only([
-                'q', 'city', 'district', 'area_from', 'area_to', 'rooms', 'bathrooms', 'status',
+                'q', 'city', 'district', 'area_from', 'area_to', 'rooms', 'bathrooms', 'status', 'purpose',
             ]),
             'cities' => Property::query()->published()->apartments()->whereNotNull('city')->distinct()->orderBy('city')->pluck('city'),
         ]);

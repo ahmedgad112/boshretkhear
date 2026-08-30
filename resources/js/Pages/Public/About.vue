@@ -1,12 +1,17 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
+import SeoHead from '../../Components/SeoHead.vue';
+import { DEFAULT_KEYWORDS, uniqueKeywords } from '../../composables/useSeo';
 
 defineOptions({ layout: PublicLayout });
 </script>
 
 <template>
-    <Head title="من نحن" />
+    <SeoHead
+        title="من نحن"
+        description="تعرف على بشرة خير — منصة عربية متخصصة في عرض الشقق للبيع والإيجار بكل وضوح وشفافية. نساعدك في إيجاد الشقة المناسبة."
+        :keywords="uniqueKeywords(DEFAULT_KEYWORDS, ['من نحن', 'شركة عقارات', 'منصة عقارية'])"
+    />
 
     <section class="ui-panel md:p-12">
         <span class="text-xs font-bold tracking-wider text-amber-600">تعرف علينا</span>

@@ -1,8 +1,15 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
 import PropertyCard from '../../Components/PropertyCard.vue';
 import Pagination from '../../Components/Pagination.vue';
+import SeoHead from '../../Components/SeoHead.vue';
+import {
+    buildPropertiesListDescription,
+    buildPropertiesListKeywords,
+    buildPropertiesListTitle,
+} from '../../composables/useSeo';
 
 defineOptions({ layout: PublicLayout });
 
@@ -24,10 +31,18 @@ const form = useForm({
 });
 
 const search = () => form.get(route('properties.index'), { preserveState: true });
+
+const seoTitle = computed(() => buildPropertiesListTitle(props.filters));
+const seoDescription = computed(() => buildPropertiesListDescription(props.filters));
+const seoKeywords = computed(() => buildPropertiesListKeywords(props.filters));
 </script>
 
 <template>
-    <Head title="الشقق" />
+    <SeoHead
+        :title="seoTitle"
+        :description="seoDescription"
+        :keywords="seoKeywords"
+    />
 
     <div class="mb-8">
         <span class="text-xs font-bold tracking-wider text-amber-600">استكشف الشقق</span>
